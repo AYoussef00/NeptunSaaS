@@ -17,6 +17,20 @@
     <link rel="stylesheet" href="{{dynamicAsset(path: 'public/assets/back-end/css/theme.minc619.css?v=1.0')}}">
     <link rel="stylesheet" href="{{dynamicAsset(path: 'public/assets/back-end/css/style.css')}}">
     <link rel="stylesheet" href="{{dynamicAsset(path: 'public/assets/back-end/css/custom.css')}}">
+    <style>
+        /* CSS for positioning the logo in the top-left corner */
+        .logo-container {
+            position: absolute; /* Or fixed if you want it to stay in place when scrolling */
+            top: 0;
+            left: 0;
+            padding: 10px; /* Optional: add padding to adjust spacing */
+            z-index: 1000; /* Ensure the logo is above other content */
+        }
+
+        .logo {
+            height: 40px; /* Adjust height as needed */
+        }
+    </style>
 </head>
 
 <body>
@@ -36,11 +50,9 @@
         </figure>
     </div>
     <div class="container py-5 py-sm-7">
-        @php($companyWebLogo=getWebConfig(name: 'company_web_logo'))
-        <a class="d-flex justify-content-center mb-5" href="javascript:">
-            <img class="z-index-2" height="40"
-                 src="{{getStorageImages(path: $companyWebLogo,type: 'backend-logo')}}"
-                 alt="{{translate('logo')}}">
+        @php($companyWebLogo = getWebConfig(name: 'company_web_logo'))
+        <a class="logo-container" href="javascript:">
+            <img class="logo" src="{{ getStorageImages(path: $companyWebLogo, type: 'backend-logo') }}" alt="Company Logo">
         </a>
         <div class="row justify-content-center">
             <div class="col-md-7 col-lg-5">
@@ -50,23 +62,22 @@
                             @csrf
                             <div class="text-center">
                                 <div class="mb-5">
-                                    <h1 class="display-4">{{translate('sign_in')}}</h1>
+                                    <h1 class="display-4">Seller Login</h1>
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">{{translate('welcome_back_to_vendor_login')}}</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Please login to your sell portal</h1>
                                     </div>
                                 </div>
                             </div>
                             <div class="js-form-message form-group">
-                                <label class="input-label" for="signingVendorEmail">{{translate('your_email')}}</label>
                                 <input type="email" class="form-control form-control-lg" name="email"
                                        id="signingVendorEmail"
-                                       tabindex="1" placeholder="email@address.com" aria-label="email@address.com"
+                                       tabindex="1" placeholder="example@email.com" aria-label="email@address.com"
                                        required data-msg="Please enter a valid email address.">
                             </div>
                             <div class="js-form-message form-group">
                                 <label class="input-label" for="signingVendorPassword" tabindex="0">
                                         <span class="d-flex justify-content-between align-items-center">
-                                          {{translate('password')}}
+                                        
                                                 <a href="{{route('vendor.auth.forgot-password.index')}}">
                                                     {{translate('forgot_password')}}
                                                 </a>
@@ -100,7 +111,7 @@
                                     </label>
                                 </div>
                             </div>
-                            @if(isset($recaptcha) && $recaptcha['status'] == 1)
+                            {{-- @if(isset($recaptcha) && $recaptcha['status'] == 1)
                                 <div id="recaptcha_element" class="w-100" data-type="image"></div>
                                 <br/>
                             @else
@@ -118,7 +129,7 @@
                                         </a>
                                     </div>
                                 </div>
-                            @endif
+                            @endif --}}
                             <button type="button" class="btn btn-lg btn-block btn--primary submit-login-form">{{translate('login')}}</button>
                         </form>
                     </div>

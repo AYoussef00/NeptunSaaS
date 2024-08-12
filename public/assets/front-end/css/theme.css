@@ -13648,7 +13648,7 @@ h5 .dropdown-toggle::after,
 
 .input-group-overlay {
     position: relative;
-    width: 100%;
+    width: 50%;
 }
 
 .input-group-overlay .prepended-form-control:not(.rounded-left-0) {
@@ -14236,6 +14236,7 @@ a.nav-link:hover .media-tab-media {
 }
 
 .navbar-tool-text {
+    
     display: none;
     -ms-flex-positive: 0;
     flex-grow: 0;
@@ -15152,7 +15153,7 @@ a.nav-link:hover .media-tab-media {
 }
 
 .navbar-light .navbar-tool-text {
-    color: #4b566b;
+    color: white;
 }
 
 .navbar-light .navbar-tool-text > small {
@@ -18866,7 +18867,7 @@ body {
 }
 
 .navbar-tool-text > small {
-    color: #4b566b !important;
+    color: white !important;
 }
 
 .modal-header .nav-tabs .nav-item .nav-link {

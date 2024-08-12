@@ -10,7 +10,7 @@
 
 
 <header class="rtl __inline-10">
-    <div class="topbar">
+    {{-- <div class="topbar">
         <div class="container">
 
             <div>
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
     <div class="navbar-sticky bg-light mobile-head">
@@ -105,7 +105,7 @@
 
                             <button class="input-group-append-overlay search_button d-none d-md-block" type="submit">
                                     <span class="input-group-text __text-20px">
-                                        <i class="czi-search text-white"></i>
+                                        <i class="czi-search text-black"></i>
                                     </span>
                             </button>
 
@@ -223,9 +223,9 @@
                         </li>
                     </ul>
 
-                    @php($categories = \App\Utils\CategoryManager::getCategoriesWithCountingAndPriorityWiseSorting(dataLimit: 11))
+                    {{-- @php($categories = \App\Utils\CategoryManager::getCategoriesWithCountingAndPriorityWiseSorting(dataLimit: 11)) --}}
 
-                    <ul class="navbar-nav mega-nav pr-lg-2 pl-lg-2 mr-2 d-none d-md-block __mega-nav">
+                    {{-- <ul class="navbar-nav mega-nav pr-lg-2 pl-lg-2 mr-2 d-none d-md-block __mega-nav">
                         <li class="nav-item {{!request()->is('/')?'dropdown':''}}">
 
                             <a class="nav-link dropdown-toggle category-menu-toggle-btn ps-0"
@@ -241,7 +241,7 @@
                                 </span>
                             </a>
                         </li>
-                    </ul>
+                    </ul> --}}
 
                     <ul class="navbar-nav mega-nav1 pr-md-2 pl-md-2 d-block d-xl-none">
                         <li class="nav-item dropdown d-md-none">

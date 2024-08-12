@@ -52,6 +52,15 @@
     </a>
 </div>
 
+<div class="col-sm-6 col-lg-3">
+    <a class="business-analytics card" href="#"  style="background-color: rgb(231, 231, 231);"> <!-- Update route as necessary -->
+        <h5 class="business-analytics__subtitle">Vendor Pending</h5>
+        <h2 class="business-analytics__title">{{ $data['vendor_pending']}}</h2>
+        {{-- <img src="{{ dynamicAsset(path: 'public/assets/back-end/img/total-categories.png') }}" class="business-analytics__img" alt=""> --}}
+    </a>
+</div>
+
+
 
 
 <div class="col-sm-6 col-lg-3">

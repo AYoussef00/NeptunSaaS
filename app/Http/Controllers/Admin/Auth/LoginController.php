@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Auth;
 
-use App\Enums\SessionKey;
 use App\Enums\UserRole;
 use App\Enums\ViewPaths\Admin\Auth;
 use App\Http\Controllers\BaseController;
@@ -11,74 +10,50 @@ use App\Models\Admin;
 use App\Services\AdminService;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Session;
 
 class LoginController extends BaseController
 {
-    public function __construct(private readonly Admin $admin, private readonly AdminService $adminService)
-    {
+    public function __construct(
+        private readonly Admin $admin,
+        private readonly AdminService $adminService
+    ) {
         $this->middleware('guest:admin', ['except' => ['logout']]);
     }
 
-    public function index(?Request $request, string $type = null): View|Collection|LengthAwarePaginator|null|callable
-    {
-        return $this->getLoginView(loginUrl: $type);
-    }
-
-    private function getLoginView(string $loginUrl): View
+    /**
+     * Show the login view based on the user role.
+     *
+     * @param Request|null $request
+     * @param string|null $type
+     * @return View
+     */
+    public function index(?Request $request, string $type = null): View
     {
         $loginTypes = [
             UserRole::ADMIN => getWebConfig(name: 'admin_login_url'),
             UserRole::EMPLOYEE => getWebConfig(name: 'employee_login_url')
         ];
 
-        $userType = array_search($loginUrl, $loginTypes);
+        $userType = array_search($type, $loginTypes);
         abort_if(!$userType, 404);
 
-        // Remove reCAPTCHA generation
-        // $recaptchaBuilder = $this->generateDefaultReCaptcha(4);
-        // Session::put(SessionKey::ADMIN_RECAPTCHA_KEY, $recaptchaBuilder->getPhrase());
-
-        // Fetch reCAPTCHA configuration
-        // $recaptcha = getWebConfig(name: 'recaptcha');
-
-        // Pass view without reCAPTCHA data
         return view(Auth::ADMIN_LOGIN)->with(['role' => $userType]);
     }
 
+    /**
+     * Handle the login request.
+     *
+     * @param LoginRequest $request
+     * @return RedirectResponse
+     */
     public function login(LoginRequest $request): RedirectResponse
     {
-        // Skip reCAPTCHA validation
-        // $recaptcha = getWebConfig(name: 'recaptcha');
-        // if (isset($recaptcha) && $recaptcha['status'] == 1) {
-        //     $request->validate([
-        //         'g-recaptcha-response' => [
-        //             function ($attribute, $value, $fail) {
-        //                 $secretKey = getWebConfig(name: 'recaptcha')['secret_key'];
-        //                 $response = $value;
-        //                 $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $secretKey . '&response=' . $response;
-        //                 $response = Http::get($url);
-        //                 $response = $response->json();
-        //                 if (!isset($response['success']) || !$response['success']) {
-        //                     $fail(translate('ReCAPTCHA_Failed'));
-        //                 }
-        //             },
-        //         ],
-        //     ]);
-        // } else if(strtolower(session(SessionKey::ADMIN_RECAPTCHA_KEY)) != strtolower($request['default_captcha_value'])) {
-        //     Toastr::error(translate('ReCAPTCHA_Failed'));
-        //     return back();
-        // }
+        $admin = $this->admin->where('email', $request->email)->first();
 
-        $admin = $this->admin->where('email', $request['email'])->first();
-
-        if (isset($admin) && in_array($request['role'], [UserRole::ADMIN, UserRole::EMPLOYEE]) && $admin->status) {
-            if ($this->adminService->isLoginSuccessful($request['email'], $request['password'], $request['remember'])) {
+        if ($admin && in_array($request->role, [UserRole::ADMIN, UserRole::EMPLOYEE]) && $admin->status) {
+            if ($this->adminService->isLoginSuccessful($request->email, $request->password, $request->remember)) {
                 return redirect()->route('admin.dashboard.index');
             }
         }
@@ -87,6 +62,11 @@ class LoginController extends BaseController
             ->withErrors([translate('credentials does not match or your account has been suspended')]);
     }
 
+    /**
+     * Log out the admin user and redirect to login page.
+     *
+     * @return RedirectResponse
+     */
     public function logout(): RedirectResponse
     {
         $this->adminService->logout();

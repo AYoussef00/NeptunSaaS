@@ -12,6 +12,24 @@
     <link rel="stylesheet" href="{{ dynamicAsset(path: 'public/assets/back-end/css/theme.minc619.css?v=1.0') }}">
     <link rel="stylesheet" href="{{ dynamicAsset(path: 'public/assets/back-end/css/style.css') }}">
     <link rel="stylesheet" href="{{ dynamicAsset(path: 'public/assets/back-end/css/toastr.css') }}">
+    <style>
+          .thin-font {
+        font-family: 'Lato', sans-serif; /* Use the font family you included */
+        font-weight: 300; /* Thin weight */
+    }
+        /* CSS for positioning the logo in the top-left corner */
+        .logo-container {
+            position: absolute; /* Or fixed if you want it to stay in place when scrolling */
+            top: 0;
+            left: 0;
+            padding: 10px; /* Optional: add padding to adjust spacing */
+            z-index: 1000; /* Ensure the logo is above other content */
+        }
+
+        .logo {
+            height: 40px; /* Adjust height as needed */
+        }
+    </style>
 </head>
 
 <body>
@@ -26,9 +44,9 @@
     <div class="container py-5 py-sm-7">
         {{-- <label class="badge badge-soft-success float-right __inline-2">{{translate('software_version')}}
             : {{ env('SOFTWARE_VERSION') }}</label> --}}
-        @php($eCommerceLogo = getWebConfig(name: 'company_web_logo'))
-        <a class="d-flex justify-content-center mb-5" href="{{ route('home') }}">
-            <img class="z-index-2 onerror-logo" height="40" src="{{ getStorageImages(path: $eCommerceLogo, type:'backend-logo') }}" alt="Logo">
+            @php($companyWebLogo = getWebConfig(name: 'company_web_logo'))
+        <a class="logo-container" href="javascript:">
+            <img class="logo" src="{{ getStorageImages(path: $companyWebLogo, type: 'backend-logo') }}" alt="Company Logo">
         </a>
 
         <div class="row justify-content-center">
@@ -39,25 +57,20 @@
                             @csrf
                             <div class="text-center">
                                 <div class="mb-5">
-                                    <h1 class="display-4">Login</h1><br>
+                                    <h1 class="display-4  thin-font">Welcome Back ! </h1><br>
                                 </div>
                             </div>
 
                             <input type="hidden" class="form-control mb-3" name="role" id="role" value="{{ $role }}">
 
                             <div class="js-form-message form-group">
-                                <label class="input-label" for="signingAdminEmail">{{translate('your_email')}}</label>
 
                                 <input type="email" class="form-control form-control-lg" name="email" id="signingAdminEmail"
-                                       tabindex="1" placeholder="email@address.com" aria-label="email@address.com"
+                                       tabindex="1" placeholder="example@email.com" aria-label="email@address.com"
                                        required data-msg="Please enter a valid email address.">
                             </div>
                             <div class="js-form-message form-group">
-                                <label class="input-label" for="signingAdminPassword" tabindex="0">
-                                    <span class="d-flex justify-content-between align-items-center">
-                                      {{translate('password')}}
-                                    </span>
-                                </label>
+                            
 
                                 <div class="input-group input-group-merge">
                                     <input type="password" class="js-toggle-password form-control form-control-lg"

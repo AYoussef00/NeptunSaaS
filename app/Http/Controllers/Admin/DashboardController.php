@@ -17,6 +17,7 @@ use App\Http\Controllers\BaseController;
 use App\Services\DashboardService;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\Seller;
 use App\Models\DeliveryMan;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
@@ -99,6 +100,7 @@ class DashboardController extends BaseController
             'category' => Category::count(),
             'brand' => Brand::count(),
             'delivery_man' => DeliveryMan::count(),
+            'vendor_pending' => Seller::where('status', 'inactive')->count(),
         ];
         return view(Dashboard::VIEW[VIEW], compact('data', 'inHouseEarning', 'vendorEarning', 'commissionEarn','inHouseOrderEarningArray','vendorOrderEarningArray','label','dateType'));
     }

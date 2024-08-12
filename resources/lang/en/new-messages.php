@@ -8408,4 +8408,7 @@ return [
 	"website_is_under_maintenance" => "Website is under maintenance",
 	"please_come_back_later" => "Please come back later",
 	"no_subscriber_found" => "No subscriber found",
+	"The banner field is required." => "The banner field is required.",
+	"The phone number has already been taken" => "The phone number has already been taken",
+	"Vendor_Registration_Approved" => "Vendor Registration Approved",
 ];
