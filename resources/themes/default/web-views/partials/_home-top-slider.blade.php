@@ -35,18 +35,20 @@
                 </div>
             @endif --}}
 
-            <div class="col-12 col-xl-9 __top-slider-images">
-                <div class="{{Session::get('direction') === "rtl" ? 'pr-xl-2' : 'pl-xl-2'}}">
-                    <div class="owl-theme owl-carousel hero-slider">
+            <div class="col-12 col-xl-9 __top-slider-images" style="width: 100%; padding: 0; margin: 0;">
+                <div class="{{Session::get('direction') === "rtl" ? 'pr-xl-2' : 'pl-xl-2'}}" style="padding: 0; margin: 0; width: 100%;">
+                    <div class="owl-theme owl-carousel hero-slider" style="width: 100%; padding: 0; margin: 0;">
                         @foreach($main_banner as $key=>$banner)
                             <a href="{{$banner['url']}}" class="d-block" target="_blank">
                                 <img class="w-100 __slide-img" alt=""
-                                    src="{{ getStorageImages(path: $banner->photo_full_url, type: 'banner') }}">
+                                    src="{{ getStorageImages(path: $banner->photo_full_url, type: 'banner') }}"
+                                    style="width: 100%; height: auto; display: block;">
                             </a>
                         @endforeach
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
 </section>
